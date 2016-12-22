@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="Banner">
+        <attr name="dotDrawableDefault" format="reference" />
+        <attr name="dotDrawableHighlight" format="reference" />
+        <!-- 默认占位图片（当没有图片时展示） -->
+        <attr name="defaultDrawable" format="reference" />
+    </declare-styleable>
+
+</resources>
