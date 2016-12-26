@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.view.ViewPager.PageTransformer;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -77,6 +76,7 @@ public class Banner extends FrameLayout {
     };
 
     private Callback callback;
+    private OnPageChangeListener pageChangeListener;
 
     public Banner(Context context) {
 
@@ -398,14 +398,31 @@ public class Banner extends FrameLayout {
         this.addView(linear_dots);
     }
 
-    private class ViewPagerOnPageChangeListener implements OnPageChangeListener {
+    //  ViewPager被占用的监听接口
+    interface OnPageChangeListener {
 
-        // TODO ViewPager被占用的监听接口
+        void onPageScrollStateChanged(int state);
+
+        void onPageScrolled(int arg0, float arg1, int arg2);
+
+        void onPageSelected(int position);
+    }
+
+    public void setOnPageChangeListener(OnPageChangeListener pageChangeListener) {
+
+        this.pageChangeListener = pageChangeListener;
+    }
+
+    private class ViewPagerOnPageChangeListener implements ViewPager.OnPageChangeListener {
+
+
         private boolean isFirstTime = true;
 
         @Override
         public void onPageScrollStateChanged(int state) {
-
+            if (pageChangeListener != null) {
+                pageChangeListener.onPageScrollStateChanged(state);
+            }
             switch (state) {
                 case ViewPager.SCROLL_STATE_DRAGGING:
                     isAutoPlaying = false;
@@ -437,11 +454,17 @@ public class Banner extends FrameLayout {
 
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
-
+            if (pageChangeListener != null) {
+                pageChangeListener.onPageScrolled(arg0, arg1, arg2);
+            }
         }
 
         @Override
         public void onPageSelected(int position) {
+
+            if (pageChangeListener != null) {
+                pageChangeListener.onPageSelected(position);
+            }
 
             if (dot_default != null && dot_highlight != null) {
                 // 指示器的图片

@@ -50,6 +50,22 @@ public class MainActivity extends AppCompatActivity {
         banner = (Banner) findViewById(R.id.banner);
         banner.setDuration(2);// 设置轮播间隔
 //        banner.setTransformer(new Banner.DepthPageTransformer());// 设置页面切换过渡效果
+        banner.setOnPageChangeListener(new Banner.OnPageChangeListener() {
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+        });
         banner.setSize(mData.size(), new Banner.Callback() {
 
             @Override
